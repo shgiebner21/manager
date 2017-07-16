@@ -17,7 +17,6 @@ class App extends Component {
     })
   }
 
-
   render() {
     return (
       <View>
@@ -25,6 +24,7 @@ class App extends Component {
       </View>
     )
   }
+
 }
 
 
