@@ -3,23 +3,28 @@ import { ListView } from 'react-native'
 import thunk from 'redux-thunk'
 import {set, lensProp} from 'ramda'
 
-const managers = (state=[], action) => {
-      switch (action.type) {
-        case 'SET_MANAGERS':
-          return action.payload
-        default:
-          return state
-      }
-    }
-const auth = (state= [], action) => {
-  console.log('action is ', action)
+const initialState = {
+  email: '',
+  password: '',
+  user: '',
+  error: '',
+  loading: false
+}
+
+
+const auth = (state = initialState, action) => {
+  console.log('actions are ', action)
       switch (action.type) {
         case 'EMAIL_CHANGED':
           return set(lensProp('email'), action.payload, state)
         case 'PASSWORD_CHANGED':
           return set(lensProp('password'), action.payload, state)
-        case 'LOGIN_SUCESS':
-          return action.payload
+        case 'LOGIN_SUCCESS':
+          return { user: action.payload, loading: false, error: 'Login successful' }
+        case 'LOGIN_FAIL':
+          return { error: 'Authentication failed.',loading: false, password: '' }
+        case 'LOGGING_IN':
+          return { loading: true, error: '' }
         default:
           return state
       }
@@ -28,7 +33,6 @@ const auth = (state= [], action) => {
 
 const store = createStore (
   combineReducers({
-    managers,
     auth
   }),
   applyMiddleware(thunk)
