@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { Provider } from 'react-redux'
+import { Scene, Router } from 'react-native-router-flux'
 import firebase from 'firebase'
 import store from './store'
 import LoginForm from './src/components/loginForm'
+import EmployeeList from './src/components/employeeList'
 
 class App extends Component {
   componentWillMount() {
@@ -19,9 +21,12 @@ class App extends Component {
 
   render() {
     return (
-      <View>
-        <LoginForm />
-      </View>
+      <Router>
+        <View>
+          <Scene key="login" component={LoginForm} title="Please Login" />
+          <Scene key="employeeList" component={EmployeeList} title="Employees" />
+        </View>
+      </Router>
     )
   }
 }

@@ -4,6 +4,7 @@ import { Card, CardSection, InputField, Button, Spinner } from './common'
 import { connect } from 'react-redux'
 import {pathOr} from 'ramda'
 import firebase from 'firebase'
+import { Actions } from 'react-native-router-flux'
 
 
 class LoginForm extends Component {
@@ -84,6 +85,7 @@ const mapActionsToProps = (dispatch) => ({
 {/* ////// helper functions   //////*/}
 const loginUserSuccess = (dispatch, user) => {
   dispatch({ type: 'LOGIN_SUCCESS', payload: user })
+    Actions.employeeList()
 }
 const loginUserFail = (dispatch) => {
   dispatch({ type: 'LOGIN_FAIL' })
