@@ -15,4 +15,10 @@ class EmployeeList extends Component {
   }
 }
 
-export default EmployeeList
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+const connector = connect(mapStateToProps)
+
+export default connector(EmployeeList)

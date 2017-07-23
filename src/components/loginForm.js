@@ -15,15 +15,24 @@ renderButton() {
     return <Spinner size='large' />
   }
     return (
+
       <Button onPress={props.onButtonPress(props.auth.email, props.auth.password)}>
         Login
       </Button>
     )
 }
 
+passwordText() {
+  const props = this.props
+  if (props.auth.password.length < 6) {
+    return <Text style={styles.errorText}>(password must have six or more characters)</Text>
+  }
+    return <Text style={{ color: 'grey' }}  >(password must have six or more characters)</Text>
+}
+
   render() {
   const props = this.props
-  console.log('state is ', props)
+
     return (
       <Card>
         <CardSection>
@@ -38,9 +47,14 @@ renderButton() {
           <InputField secureTextEntry
                  label='Password'
                  placeholder='P@sswe_rd'
+                 placeholderTextColor='red'
                  value={pathOr('', ['auth', 'password'], props)}
                  onChangeText={ (text) => props.onPasswordChange(text)}
+                 keyboardType='email-address'
           />
+        </CardSection>
+        <CardSection>
+          { this.passwordText() }
         </CardSection>
 
         <Text style={styles.errorText}>{props.auth.error}</Text>
@@ -55,8 +69,8 @@ renderButton() {
 
 const styles = {
   errorText: {
-    fontSize: 20,
-    alignSelf: 'center',
+    fontSize: 14,
+    alignItems: 'center',
     color: 'red'
   }
 }
@@ -69,23 +83,25 @@ const mapActionsToProps = (dispatch) => ({
   onEmailChange: (text) => dispatch({ type: 'EMAIL_CHANGED', payload: text }),
   onPasswordChange: (text) => dispatch({ type: 'PASSWORD_CHANGED', payload: text }),
   onButtonPress: (email, password) => (e) => {
-    dispatch({ type: 'LOGGING_IN' })
 
+    dispatch({ type: 'LOGGING_IN' })
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => loginUserSuccess(dispatch, user))
       .catch( () => {
-        console.log('login data is ', email, password)
         firebase.auth().createUserWithEmailAndPassword(email, password)
           .then(user => loginUserSuccess(dispatch, user))
           .catch( () => loginUserFail(dispatch))
       })
   }
+
 })
 
+
 {/* ////// helper functions   //////*/}
+
 const loginUserSuccess = (dispatch, user) => {
   dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-    Actions.employeeList()
+    Actions.main()
 }
 const loginUserFail = (dispatch) => {
   dispatch({ type: 'LOGIN_FAIL' })
