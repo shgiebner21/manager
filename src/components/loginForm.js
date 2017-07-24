@@ -101,7 +101,7 @@ const mapActionsToProps = (dispatch) => ({
 
 const loginUserSuccess = (dispatch, user) => {
   dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-    Actions.main()
+    Actions.employeeList()
 }
 const loginUserFail = (dispatch) => {
   dispatch({ type: 'LOGIN_FAIL' })

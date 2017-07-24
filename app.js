@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { Provider } from 'react-redux'
 import { Scene, Router } from 'react-native-router-flux'
 import firebase from 'firebase'
@@ -23,18 +23,14 @@ class App extends Component {
 
   render() {
     return (
-      <Router sceneStyle={{ paddingTop: 65 }}>
+      <Router>
         <View>
-          <Scene key="auth">
-            <Scene key="login"  component={LoginForm} title="Please Login" />
-          </Scene>
+            <Scene key="login" component={LoginForm} title="Please Login" initial />
 
-          <Scene key="main">
             <Scene key="employeeList" component={EmployeeList} title="Employees"
                    onRight={ () => Actions.employeeCreate() } rightTitle="Add >"
-                   initial />
-                 <Scene key="employeeCreate" component={EmployeeCreate} title="Create Employee" />
-          </Scene>
+             />
+            <Scene key="employeeCreate" component={EmployeeCreate} title="Create Employee" />
         </View>
       </Router>
     )

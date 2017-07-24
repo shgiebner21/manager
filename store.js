@@ -1,5 +1,4 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { ListView } from 'react-native'
 import thunk from 'redux-thunk'
 import {set, lensProp} from 'ramda'
 
@@ -9,6 +8,11 @@ const initialState = {
   user: '',
   error: '',
   loading: false
+}
+const initialEmployee = {
+  name: '',
+  phone: '',
+  shift: ''
 }
 
 const auth = (state = initialState, action) => {
@@ -29,12 +33,14 @@ const auth = (state = initialState, action) => {
       }
     }
 
-const employee = (state = {}, action) => {
+const employee = (state = initialEmployee, action) => {
   switch (action.type) {
     case 'NAME_CHANGED':
       return set(lensProp('name'), action.payload, state)
     case 'PHONE_CHANGED':
       return set(lensProp('phone'), action.payload, state)
+    case 'DAY_CHANGED':
+      return set(lensProp('day'), action.payload, state)
     default:
       return state
   }
