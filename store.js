@@ -40,7 +40,7 @@ const employee = (state = initialEmployee, action) => {
     case 'PHONE_CHANGED':
       return set(lensProp('phone'), action.payload, state)
     case 'DAY_CHANGED':
-      return set(lensProp('day'), action.payload, state)
+      return set(lensProp('shift'), action.payload, state)
     default:
       return state
   }

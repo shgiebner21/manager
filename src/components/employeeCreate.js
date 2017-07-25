@@ -41,14 +41,15 @@ class EmployeeCreate extends Component {
           <Text style={ styles.pickerTextStyle }>Shift</Text>
           <Picker style={{ flex: 1 }}
                   selectedValue={props.shift}
-                  onValueChange={ day => props.onDayChange(day) }
+                  onValueChange={ (itemValue, itemIndex) => props.onDayChange( itemValue ) }
           >
             { map(pickerDay, shiftDays) }
           </Picker>
         </CardSection>
 
         <CardSection>
-          <Button>Create Employee</Button>
+          <Button onPress={props.onButtonPress(props.employee.name, props.employee.phone, props.employee.shift )}
+          >Create Employee</Button>
         </CardSection>
       </Card>
     )
@@ -63,12 +64,19 @@ const styles = {
 }
 
 const mapStateToProps = (state) => ({
-  employee: state.employee
+  employee: state.employee,
+  auth: state.auth
 })
 const mapActionsToProps = (dispatch) => ({
   onNameChange: (text) => dispatch({ type: 'NAME_CHANGED', payload: text }),
   onPhoneChange: (text) => dispatch({ type: 'PHONE_CHANGED', payload: text }),
-  onDayChange: (day) => dispatch({ type: 'DAY_CHANGED', payload: day })
+  onDayChange: (shift) => dispatch({ type: 'DAY_CHANGED', payload: shift }),
+  onButtonPress: (name, phone, shift) => (e) => {
+    const { currentUser } = firebase.auth()
+    console.log(`/users/${currentUser.uid}/employees`)
+    firebase.database().ref(`/users/${currentUser.uid}/employees`)
+      .push({ name, phone, shift })
+  }
 })
 
 const connector = connect(mapStateToProps, mapActionsToProps)

@@ -14,10 +14,10 @@ class App extends Component {
     firebase.initializeApp({
       apiKey: "AIzaSyA4Qf2KqtlgSyi-SLY7aXImmpRY-G8NtFo",
       authDomain: "manager-2669a.firebaseapp.com",
-      databaseURL: process.env.DB_URL_SECRET,
+      databaseURL: "https://manager-2669a.firebaseio.com",
       projectId: "manager-2669a",
-      storageBucket: process.env.BUCKET_SECRET,
-      messagingSenderId: process.env.MESSAGING_SENDER_ID
+      storageBucket: "manager-2669a.appspot.com",
+      messagingSenderId: "1022241608684"
     })
   }
 
@@ -25,12 +25,12 @@ class App extends Component {
     return (
       <Router>
         <View>
-            <Scene key="login" component={LoginForm} title="Please Login" initial />
+              <Scene key="login" component={LoginForm} title="Please Login" initial />
 
-            <Scene key="employeeList" component={EmployeeList} title="Employees"
-                   onRight={ () => Actions.employeeCreate() } rightTitle="Add >"
-             />
-            <Scene key="employeeCreate" component={EmployeeCreate} title="Create Employee" />
+              <Scene key="employeeList" component={EmployeeList} title="Employees"
+                     onRight={ () => Actions.employeeCreate() } rightTitle="Add >"
+               />
+              <Scene key="employeeCreate" component={EmployeeCreate} title="Create Employee" />
         </View>
       </Router>
     )
