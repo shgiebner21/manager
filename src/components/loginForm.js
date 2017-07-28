@@ -100,12 +100,12 @@ const mapActionsToProps = (dispatch) => ({
 {/* ////// helper functions   //////*/}
 
 const loginUserSuccess = (dispatch, user) => {
+  console.log('LOGIN_SUCCESS')
   dispatch({ type: 'LOGIN_SUCCESS', payload: user })
-  console.log('inside LOGIN_SUCCESS')
     Actions.employeeList()
 }
 const loginUserFail = (dispatch) => {
-  console.log('inside LOGIN_FAIL')
+  console.log('LOGIN_FAIL')
   dispatch({ type: 'LOGIN_FAIL' })
 }
 

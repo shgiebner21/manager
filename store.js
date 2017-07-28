@@ -1,6 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import { ListView } from 'react-native'
 import {set, lensProp} from 'ramda'
+
+const ds = new ListView.DataSource({
+  rowHasChanged: (r1, r2) => r1 !== r2 })
 
 const initialState = {
   email: '',
@@ -51,8 +55,16 @@ const employee = (state = initialEmployee, action) => {
 const employees = (state = {}, action) => {
   switch (action.type) {
     case 'EMPLOYEE_FETCH_SUCCESS':
-    console.log('action is ', action)
+    console.log('Fetch_Success action is ', action.payload)
       return action.payload
+    default:
+      return state
+  }
+}
+const dataSource = (state=ds.cloneWithRows([]), action) => {
+  switch (action.type) {
+    case 'EMPLOYEE_FETCH_SUCCESS':
+      return ds.cloneWithRows(action.payload)
     default:
       return state
   }
@@ -63,7 +75,8 @@ const store = createStore (
   combineReducers({
     auth,
     employee,
-    employees
+    employees,
+    dataSource
   }),
   applyMiddleware(thunk)
 )

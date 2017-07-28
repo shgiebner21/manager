@@ -9,6 +9,7 @@
 	"dependencies": {
 		"expo": "^18.0.9",
 		"firebase": "^4.1.3",
+		"lodash": "^4.17.4",
 		"pouchdb-react-native": "^6.2.6",
 		"ramda": "^0.24.1",
 		"react": "^16.0.0-alpha.12",
