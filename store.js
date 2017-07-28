@@ -41,6 +41,18 @@ const employee = (state = initialEmployee, action) => {
       return set(lensProp('phone'), action.payload, state)
     case 'DAY_CHANGED':
       return set(lensProp('shift'), action.payload, state)
+    case 'DAY_RESET':
+      return initialEmployee
+    default:
+      return state
+  }
+}
+
+const employees = (state = {}, action) => {
+  switch (action.type) {
+    case 'EMPLOYEE_FETCH_SUCCESS':
+    console.log('action is ', action)
+      return action.payload
     default:
       return state
   }
@@ -50,7 +62,8 @@ const employee = (state = initialEmployee, action) => {
 const store = createStore (
   combineReducers({
     auth,
-    employee
+    employee,
+    employees
   }),
   applyMiddleware(thunk)
 )

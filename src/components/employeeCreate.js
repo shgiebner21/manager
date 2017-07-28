@@ -3,6 +3,7 @@ import { Picker, Text } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import { pathOr, map } from 'ramda'
+import { Actions } from 'react-native-router-flux'
 import { Card, CardSection, InputField, Button } from './common'
 
 
@@ -76,6 +77,8 @@ const mapActionsToProps = (dispatch) => ({
     console.log(`/users/${currentUser.uid}/employees`)
     firebase.database().ref(`/users/${currentUser.uid}/employees`)
       .push({ name, phone, shift })
+      Actions.popTo('employeeList')
+      dispatch({ type: 'DAY_RESET' })
   }
 })
 
